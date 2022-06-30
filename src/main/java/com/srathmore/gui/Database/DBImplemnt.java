@@ -9,7 +9,7 @@ public class DBImplemnt extends DBOperations {
     Connection databaseLink;
 
     @Override
-    public void insert(String tableName, String[] columns, String[] values) {
+    public void insert(String tableName, String[] columns, String[] values) throws Exception  {
         //use the databaseLink to insert the values into the table.
         Connection databaseLink = dbConnect();
         //create a insertQuery to insert the values into the table.
@@ -28,17 +28,13 @@ public class DBImplemnt extends DBOperations {
             }
         }
         insertQuery.append(")");
-        try {
             Statement statement = databaseLink.createStatement();
             statement.executeUpdate(insertQuery.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+               statement.close();
     }
 
     @Override
-    public void update(String tableName, String[] columns, String[] values, String whereClause) {
+    public void update(String tableName, String[] columns, String[] values, String whereClause)throws Exception {
 //use the databaseLink to update the values into the table.
         Connection databaseLink = dbConnect();
         //create a updateQuery to update the values into the table.
@@ -50,31 +46,26 @@ public class DBImplemnt extends DBOperations {
             }
         }
         updateQuery.append(" where ").append(whereClause);
-        try {
+
             Statement statement = databaseLink.createStatement();
             statement.executeUpdate(updateQuery.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+               statement.close();
     }
 
     @Override
-    public void delete(String tableName, String whereClause) {
+    public void delete(String tableName, String whereClause)throws Exception {
 //use the databaseLink to delete the values into the table.
         Connection databaseLink = dbConnect();
         //create a deleteQuery to delete the values into the table.
         String deleteQuery = "delete from " + tableName + " where " + whereClause;
-        try {
             Statement statement = databaseLink.createStatement();
             statement.executeUpdate(deleteQuery);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                statement.close();
 
     }
 
     @Override
-    public void select(String tableName, String[] columns, String whereClause) {
+    public void select(String tableName, String[] columns, String whereClause)throws Exception {
 //use the databaseLink to select the values into the table.
         Connection databaseLink = dbConnect();
         //create a selectQuery to select the values into the table.
@@ -86,7 +77,7 @@ public class DBImplemnt extends DBOperations {
             }
         }
         selectQuery.append(" from ").append(tableName).append(" where ").append(whereClause);
-        try {
+
             Statement statement = databaseLink.createStatement();
             ResultSet queryOutput = statement.executeQuery(selectQuery.toString());
             while (queryOutput.next()) {
@@ -94,10 +85,7 @@ public class DBImplemnt extends DBOperations {
                     System.out.println(column + ": " + queryOutput.getString(column));
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
+                statement.close();
     }
 
     @Override
