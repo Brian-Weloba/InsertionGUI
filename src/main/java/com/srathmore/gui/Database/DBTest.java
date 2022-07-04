@@ -1,10 +1,8 @@
 package com.srathmore.gui.Database;
 
-import java.sql.SQLException;
-
 public class DBTest {
     //instantiate the DBImplementation class
-    static DBImplemnt db = new DBImplemnt();
+    static DBImplementation db = new DBImplementation();
 
     public static void main(String[] args) {
         //run the tests

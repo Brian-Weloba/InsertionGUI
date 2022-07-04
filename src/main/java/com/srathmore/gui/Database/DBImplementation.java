@@ -5,11 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DBImplemnt extends DBOperations {
+public class DBImplementation extends DBOperations {
     Connection databaseLink;
 
     @Override
-    public void insert(String tableName, String[] columns, String[] values) throws Exception  {
+    public void insert(String tableName, String[] columns, String[] values) throws Exception {
         //use the databaseLink to insert the values into the table.
         Connection databaseLink = dbConnect();
         //create a insertQuery to insert the values into the table.
@@ -28,14 +28,14 @@ public class DBImplemnt extends DBOperations {
             }
         }
         insertQuery.append(")");
-            Statement statement = databaseLink.createStatement();
-            statement.executeUpdate(insertQuery.toString());
-               statement.close();
+        Statement statement = databaseLink.createStatement();
+        statement.executeUpdate(insertQuery.toString());
+        statement.close();
     }
 
     @Override
-    public void update(String tableName, String[] columns, String[] values, String whereClause)throws Exception {
-//use the databaseLink to update the values into the table.
+    public void update(String tableName, String[] columns, String[] values, String whereClause) throws Exception {
+        //use the databaseLink to update the values into the table.
         Connection databaseLink = dbConnect();
         //create a updateQuery to update the values into the table.
         StringBuilder updateQuery = new StringBuilder("update " + tableName + " set ");
@@ -47,26 +47,26 @@ public class DBImplemnt extends DBOperations {
         }
         updateQuery.append(" where ").append(whereClause);
 
-            Statement statement = databaseLink.createStatement();
-            statement.executeUpdate(updateQuery.toString());
-               statement.close();
+        Statement statement = databaseLink.createStatement();
+        statement.executeUpdate(updateQuery.toString());
+        statement.close();
     }
 
     @Override
-    public void delete(String tableName, String whereClause)throws Exception {
-//use the databaseLink to delete the values into the table.
+    public void delete(String tableName, String whereClause) throws Exception {
+        //use the databaseLink to delete the values into the table.
         Connection databaseLink = dbConnect();
         //create a deleteQuery to delete the values into the table.
         String deleteQuery = "delete from " + tableName + " where " + whereClause;
-            Statement statement = databaseLink.createStatement();
-            statement.executeUpdate(deleteQuery);
-                statement.close();
+        Statement statement = databaseLink.createStatement();
+        statement.executeUpdate(deleteQuery);
+        statement.close();
 
     }
 
     @Override
-    public void select(String tableName, String[] columns, String whereClause)throws Exception {
-//use the databaseLink to select the values into the table.
+    public void select(String tableName, String[] columns, String whereClause) throws Exception {
+        //use the databaseLink to select the values into the table.
         Connection databaseLink = dbConnect();
         //create a selectQuery to select the values into the table.
         StringBuilder selectQuery = new StringBuilder("select ");
@@ -78,14 +78,14 @@ public class DBImplemnt extends DBOperations {
         }
         selectQuery.append(" from ").append(tableName).append(" where ").append(whereClause);
 
-            Statement statement = databaseLink.createStatement();
-            ResultSet queryOutput = statement.executeQuery(selectQuery.toString());
-            while (queryOutput.next()) {
-                for (String column : columns) {
-                    System.out.println(column + ": " + queryOutput.getString(column));
-                }
+        Statement statement = databaseLink.createStatement();
+        ResultSet queryOutput = statement.executeQuery(selectQuery.toString());
+        while (queryOutput.next()) {
+            for (String column : columns) {
+                System.out.println(column + ": " + queryOutput.getString(column));
             }
-                statement.close();
+        }
+        statement.close();
     }
 
     @Override
